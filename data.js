@@ -1,15 +1,13 @@
 /* === data.js === */
 /* Repositorio de Contenidos - Κεφάλαιον ΚΖ' */
 
-// Se asignan las constantes iniciales
-const titulus_graecus = "Κεφάλαιον ΚΖ' (Ἄσκησις)";
+const titulus_graecus = "Κεφάλαιον ΚΖ' (Ἄσκησis)";
 const titulus_latinus = {
     zh: "第27章 (練習)"
 };
 
-// CORRECCIÓN: Se asigna la estructura principal a una variable (const data_kz)
-const data_kz = { // (Se añade 'const data_kz = {' para encapsular la data)
-    paragrafus: { // (Se anida 'paragrafus' dentro de la variable principal)
+const data_kz = {
+    paragrafus: {
         id: 1,
         orationes: [
             {
@@ -80,23 +78,9 @@ const data_kz = { // (Se añade 'const data_kz = {' para encapsular la data)
                         significationes: { zh: '統治 (原型: ἄρχω)' } 
                     }
                 ]
-            }, // <-- CORRECCIÓN: Se añade la coma que faltaba aquí
-
-            /* CORRECCIÓN: Se elimina este bloque duplicado que causaba un error
-                {
-                    id_orationis: 'o2',
-                    textus_graecus: "...", // Próxima frase aquí
-                    translationes: { 
-                        zh: '...'
-                    },
-                    verba: [
-                        // Próximas palabras aquí
-                    ]
-                } 
-            */
-            
+            },
             {
-                id_orationis: 'o2', // Este es el objeto 'o2' correcto
+                id_orationis: 'o2',
                 textus_graecus: "ἀριστοκρατία ἐστὶn ἐν ταῖς πόλεσι ἐν αἷς οἱ ἄριστοι ἄρχουσιν.",
                 translationes: { 
                     zh: '<strong>中文（繁體）</strong>: 貴族制，就是由最優秀的人（在城邦中）進行統治。'
@@ -458,8 +442,7 @@ const data_kz = { // (Se añade 'const data_kz = {' para encapsular la data)
                     { id_verbi: 'v8_2', terminus: 'Ἀθήναις', analysis_morphologicus_zh: '專有名詞：陰性、複數、與格。', significationes: { zh: '在雅典 (原型: αἱ Ἀθῆναι)' } },
                     { id_verbi: 'v8_3', terminus: 'οἱ', analysis_morphologicus_zh: '定冠詞：陽性、複數、主格。', significationes: { zh: '(定冠詞)' } },
                     { id_verbi: 'v8_4', terminus: 'πολῖται', analysis_morphologicus_zh: '名詞：陽性、複數、主格 (主語)。', significationes: { zh: '公民們 (原型: ὁ πολίτης)' } },
-                    { id_verbi: 'v8_5', terminus: 'ἐν', analysis_morphologicus_zh: '介詞 (搭配與格)。', 
-                        significationes: { zh: '在...之中' } },
+                    { id_verbi: 'v8_5', terminus: 'ἐν', analysis_morphologicus_zh: '介詞 (搭配與格)。', significationes: { zh: '在...之中' } },
                     { id_verbi: 'v8_6', terminus: 'τῇ', analysis_morphologicus_zh: '定冠詞：陰性、單數、與格。', significationes: { zh: '(定冠詞)' } },
                     { id_verbi: 'v8_7', terminus: 'ἐκκλησίᾳ', analysis_morphologicus_zh: '名詞：陰性、單數、與格。', significationes: { zh: '在公民大會 (原型: ἡ ἐκκλησία)' } },
                     { id_verbi: 'v8_8', terminus: 'ἐκκλησιάζουσιν.', analysis_morphologicus_zh: '動詞：第三人稱、複數、現在時、直陳語氣、主動。', significationes: { zh: '他們集會 (原型: ἐκκλησιάζω)' } }
@@ -936,20 +919,19 @@ const data_kz = { // (Se añade 'const data_kz = {' para encapsular la data)
                     { id_verbi: 'v36_2', terminus: 'τε', analysis_morphologicus_zh: '連接詞 (enclitic)。', significationes: { zh: '與' } },
                     { id_verbi: 'v36_3', terminus: 'καὶ', analysis_morphologicus_zh: '連接詞。', significationes: { zh: '和' } },
                     { id_verbi: 'v36_4', terminus: 'δίκαι', analysis_morphologicus_zh: '名詞：陰性、複數、主格 (主語)。', significationes: { zh: '私訴 (原型: ἡ δίκη)' } },
-                    { id_verbi: 'v36_5', terminus: 'λαγχάνονται', analysis_morphologicus_zh: '動詞：第三人稱、複數、現在時、直陳語氣、中間/被動。', significationes: { zh: '被分配 (原型: λαγχάνω)' } },
+                    { id_verbi: 'v36_5', terminus: 'λαγχάνονται', analysis_morphologicus_zh: '動詞：第三人稱、複數、現在時、直陳語氣、中間/被 động。', significationes: { zh: '被分配 (原型: λαγχάνω)' } },
                     { id_verbi: 'v36_6', terminus: 'πρὸς', analysis_morphologicus_zh: '介詞 (搭配直接受格)。', significationes: { zh: '向' } },
                     { id_verbi: 'v36_7', terminus: 'αὐτούς,', analysis_morphologicus_zh: '人稱代名詞：陽性、複數、直接受格。', significationes: { zh: '他們 (原型: αὐτός)' } },
                     { id_verbi: 'v36_8', terminus: 'ἃς', analysis_morphologicus_zh: '關係代名詞：陰性、複數、直接受格 (受詞)。', significationes: { zh: '那些[訴訟] (原型: ὅς)' } },
                     { id_verbi: 'v36_9', terminus: 'ἀνακρίναντες', analysis_morphologicus_zh: '分詞：不定過去時、主動、陽性、複數、主格。', significationes: { zh: '在審查之後 (原型: ἀνακρίνω)' } },
-                    { id_Vimbi: 'v36_10', terminus: 'εἰς', analysis_morphologicus_zh: '介詞 (搭配直接受格)。', significationes: { zh: '進入' } },
+                    { id_verbi: 'v36_10', terminus: 'εἰς', analysis_morphologicus_zh: '介詞 (搭配直接受格)。', significationes: { zh: '進入' } },
                     { id_verbi: 'v36_11', terminus: 'τὸ', analysis_morphologicus_zh: '定冠詞：中性、單數、直接受格。', significationes: { zh: '(定冠詞)' } },
                     { id_verbi: 'v36_12', terminus: 'δικαστήριον', analysis_morphologicus_zh: '名詞：中性、單數、直接受格。', significationes: { zh: '法庭 (原型: τὸ δικαστήριον)' } },
                     { id_verbi: 'v36_13', terminus: 'εἰσάγουσιν.', analysis_morphologicus_zh: '動詞：第三人稱、複數、現在時、直陳語氣、主動。', significationes: { zh: '他們引入 (原型: εἰσάγω)' } }
                 ]
-            } // (El último objeto no lleva coma)
+            }
+        ]
+    }
+};
         
-        ] // <-- CORRECCIÓN: Se añade ']' para cerrar el array 'orationes'
-    } // <-- CORRECCIÓN: Se añade '}' para cerrar el objeto 'paragrafus'
-}; // <-- CORRECCIÓN: Se añade '};' para cerrar el objeto 'data_kz'
-
 /* === Fin del Bloque (Sprint 7-36) === */
