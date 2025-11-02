@@ -28,39 +28,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Renderizado Inicial ---
     function initialRender() {
-        // Asegúrate de que los datos de data.js estén disponibles
-        if (typeof data_kz === 'undefined' || typeof titulus_graecus === 'undefined') {
-            console.error("Error: Los datos (data_kz, titulus_graecus) no están cargados. Asegúrate de que data.js se cargue antes que logic.js.");
-            return;
-        }
-        
         mainTitle.textContent = titulus_graecus;
         subtitle.textContent = titulus_latinus[idiomaActivo];
         reddeParagrafum();
         actualizaMarginalia();
     }
 
-    // --- Función para Renderizar el Texto Griego ---
+    // --- Función para Renderizar el Texto Griego (MODIFICADA) ---
     function reddeParagrafum() {
-        // CORRECCIÓN: Se accede a 'data_kz.paragrafus' en lugar de 'paragrafus'
-        let fullText = data_kz.paragrafus.orationes.map(o => o.textus_graecus).join(' ');
-        let allVerba = data_kz.paragrafus.orationes.flatMap(o => o.verba.map(v => ({...v, oratioId: o.id_orationis})));
+        paragrafusContentus.innerHTML = ''; // Limpiar el contenedor
 
-        // Ordenar por longitud para evitar solapamientos (ej. "en" y "men")
-        allVerba.sort((a,b) => b.terminus.replace(/[.,·;:]/g, '').length - a.terminus.replace(/[.,·;:]/g, '').length);
+        // Iterar por cada oración en los datos
+        paragrafus.orationes.forEach(oratio => {
+            if (!oratio.textus_graecus || oratio.textus_graecus === "...") return; // Omitir frases vacías
 
-        allVerba.forEach(verbum => {
-            if (!verbum.terminus) return; // Omitir verba vacíos
-            const cleanTerminus = verbum.terminus.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-            const regex = new RegExp(`(${cleanTerminus})(?![^<]*?>|[^<>]*?<\\/)`, 'g');
-            const replacement = `<span class="verbum" data-verbum-id="${verbum.id_verbi}" data-oratio-id="${verbum.oratioId}">$1</span>`;
-            fullText = fullText.replace(regex, replacement);
+            let sentenceText = oratio.textus_graecus; // Texto de esta oración
+            let oratioVerba = oratio.verba.map(v => ({...v, oratioId: oratio.id_orationis}));
+
+            // Ordenar las palabras de ESTA oración por longitud
+            oratioVerba.sort((a,b) => b.terminus.replace(/[.,·;:]/g, '').length - a.terminus.replace(/[.,·;:]/g, '').length);
+            
+            // Aplicar reemplazo de verba solo para esta oración
+            oratioVerba.forEach(verbum => {
+                if (!verbum.terminus) return;
+                const cleanTerminus = verbum.terminus.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                // Regex: Busca el término exacto, pero no dentro de tags HTML ya existentes
+                const regex = new RegExp(`(${cleanTerminus})(?![^<]*?>|[^<>]*?<\\/)`, 'g');
+                const replacement = `<span class="verbum" data-verbum-id="${verbum.id_verbi}" data-oratio-id="${verbum.oratioId}">$1</span>`;
+                sentenceText = sentenceText.replace(regex, replacement);
+            });
+
+            // Crear un elemento <p> para esta oración
+            const p = document.createElement('p');
+            p.className = 'orationis-paragraph'; // Nueva clase para espaciado
+            p.innerHTML = sentenceText; // Asignar el texto procesado
+            
+            // Añadir el párrafo al contenedor principal
+            paragrafusContentus.appendChild(p);
         });
-
-        paragrafusContentus.innerHTML = fullText.replace(/\n/g, '<br><br>');
     }
     
-    // --- Función para Actualizar la Barra Lateral ---
+    // --- Función para Actualizar la Barra Lateral (Sin cambios) ---
     function actualizaMarginalia() {
         let htmlContentus = '';
         footerText.innerHTML = config.footerTextContent;
@@ -101,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         marginaliaContentus.innerHTML = htmlContentus;
     }
 
-    // --- Manejador de Clics en Texto Griego ---
+    // --- Manejador de Clics en Texto Griego (Sin cambios) ---
     paragrafusContentus.addEventListener('click', (e) => {
         const verbumTarget = e.target.closest('.verbum');
         if (!verbumTarget) {
@@ -123,10 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const verbumId = verbumTarget.dataset.verbumId;
             const oratioId = verbumTarget.dataset.oratioId;
-            
-            // CORRECCIÓN: Se accede a 'data_kz.paragrafus' en lugar de 'paragrafus'
-            activaOratio = data_kz.paragrafus.orationes.find(o => o.id_orationis === oratioId);
-            
+            activaOratio = paragrafus.orationes.find(o => o.id_orationis === oratioId);
             if (activaOratio) {
                 activumVerbum = activaOratio.verba.find(v => v.id_verbi === verbumId);
             }
