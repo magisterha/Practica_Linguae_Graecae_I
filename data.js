@@ -94,7 +94,7 @@ const data_kz = {
                     },
                     { 
                         id_verbi: 'v2_2', 
-                        terminus: 'ἐστὶn', 
+                        terminus: 'ἐστὶν', 
                         analysis_morphologicus_zh: '動詞：第三人稱單數現在時直陳式主動語態。(註：n 為 νῦ ἐφελκυστικόν)', 
                         significationes: { zh: '是，存在 (原型: εἰμί)' } 
                     },
