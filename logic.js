@@ -28,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Renderizado Inicial ---
     function initialRender() {
+        // Asegúrate de que los datos de data.js estén disponibles
+        if (typeof data_kz === 'undefined' || typeof titulus_graecus === 'undefined') {
+            console.error("Error: Los datos (data_kz, titulus_graecus) no están cargados. Asegúrate de que data.js se cargue antes que logic.js.");
+            return;
+        }
+        
         mainTitle.textContent = titulus_graecus;
         subtitle.textContent = titulus_latinus[idiomaActivo];
         reddeParagrafum();
@@ -36,8 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Función para Renderizar el Texto Griego ---
     function reddeParagrafum() {
-        let fullText = paragrafus.orationes.map(o => o.textus_graecus).join(' ');
-        let allVerba = paragrafus.orationes.flatMap(o => o.verba.map(v => ({...v, oratioId: o.id_orationis})));
+        // CORRECCIÓN: Se accede a 'data_kz.paragrafus' en lugar de 'paragrafus'
+        let fullText = data_kz.paragrafus.orationes.map(o => o.textus_graecus).join(' ');
+        let allVerba = data_kz.paragrafus.orationes.flatMap(o => o.verba.map(v => ({...v, oratioId: o.id_orationis})));
 
         // Ordenar por longitud para evitar solapamientos (ej. "en" y "men")
         allVerba.sort((a,b) => b.terminus.replace(/[.,·;:]/g, '').length - a.terminus.replace(/[.,·;:]/g, '').length);
@@ -50,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fullText = fullText.replace(regex, replacement);
         });
 
-        paragrafusContentus.innerHTML = fullText.replace(/\n/g, '<br><br>'); // Mantener saltos de párrafo si los hay
+        paragrafusContentus.innerHTML = fullText.replace(/\n/g, '<br><br>');
     }
     
     // --- Función para Actualizar la Barra Lateral ---
@@ -116,7 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const verbumId = verbumTarget.dataset.verbumId;
             const oratioId = verbumTarget.dataset.oratioId;
-            activaOratio = paragrafus.orationes.find(o => o.id_orationis === oratioId);
+            
+            // CORRECCIÓN: Se accede a 'data_kz.paragrafus' en lugar de 'paragrafus'
+            activaOratio = data_kz.paragrafus.orationes.find(o => o.id_orationis === oratioId);
+            
             if (activaOratio) {
                 activumVerbum = activaOratio.verba.find(v => v.id_verbi === verbumId);
             }
